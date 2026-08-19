@@ -1,0 +1,28 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-container
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: studentdb
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  java-app:
+    build: .
+    container_name: java-container
+
+    ports:
+      - "8080:8080"
+
+    depends_on:
+      - mysql
+
+volumes:
+  mysql-data:
